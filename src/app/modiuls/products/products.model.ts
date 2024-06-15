@@ -48,7 +48,7 @@ const productDataSchem = new Schema<TProductData>({
     type: [String],
     required: [true, 'name is require'],
   },
-  variants: productsVarientSchema,
+  variants:[ productsVarientSchema],
   inventory: productInventorySchema,
 });
 

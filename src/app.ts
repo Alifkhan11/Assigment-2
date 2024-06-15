@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(cors());
 
 //application rought
-app.use('/api/v1/products',ProductsRought);
+app.use('/api/products',ProductsRought);
 
 app.get('/', (req, res) => {
   const a = 20;

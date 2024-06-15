@@ -6,6 +6,19 @@ const createProductsFronDB = async (TProductsData: TProductData) => {
   return resualt;
 };
 
+
+const getProductsFromDB=async()=>{
+  const resualt = await Product.find()
+  return resualt
+}
+
+const getoneProductsFromDB=async(_id:string)=>{
+  const resualt = await Product.findOne({_id})
+  return resualt
+}
+
 export const ProductService = {
   createProductsFronDB,
+  getProductsFromDB,
+  getoneProductsFromDB
 };
