@@ -69,9 +69,38 @@ const getoneProducts=async(req:Request,res:Response)=>{
 }
 
 
+//updath products
+
+const updathProducts=async (req:Request,res:Response)=>{
+  try {
+
+    const {productId}=req.params
+    const {Products:productsData} = req.body;
+
+   const resualt =await ProductService.updathProductsFromDB(productId,productsData)
+  
+
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully!",
+      data: resualt,
+    });
+    
+  } catch (error:any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || "Product updated unsuccessfully!",
+      data: error,
+    });
+  }
+}
+
+
+
 
 export const ProductsController = {
   createProducts,
   getProducts,
-  getoneProducts
+  getoneProducts,
+  updathProducts
 };

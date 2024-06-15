@@ -9,4 +9,6 @@ router.get('/',ProductsController.getProducts)
 
 router.get('/:productId',ProductsController.getoneProducts)
 
+router.put('/:productId',ProductsController.updathProducts)
+
 export const ProductsRought = router;

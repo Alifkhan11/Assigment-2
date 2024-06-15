@@ -17,8 +17,16 @@ const getoneProductsFromDB=async(_id:string)=>{
   return resualt
 }
 
+
+const updathProductsFromDB=async(_id:string,updateData:any)=>{
+  const resualt = await Product.findByIdAndUpdate(_id,updateData,{new:true})
+  return resualt
+}
+
+
 export const ProductService = {
   createProductsFronDB,
   getProductsFromDB,
-  getoneProductsFromDB
+  getoneProductsFromDB,
+  updathProductsFromDB
 };
