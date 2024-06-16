@@ -120,13 +120,13 @@ const searchProducts = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Product searching successfully!',
+      message: "Products matching search term 'iphone' fetched successfully!",
       data: resualt,
     });
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: error.message || 'Product searching unsuccessfully!',
+      message: error.message || "Products matching search term 'iphone' fetched unsuccessfully!",
       data: error,
     });
   }
