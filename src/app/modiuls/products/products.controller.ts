@@ -7,11 +7,10 @@ import ProductDataSchema from './products.validation';
 const createProducts = async (req: Request, res: Response) => {
   try {
     const { Products: productsData } = req.body;
-// const resualt = await ProductService.createProductsFronDB(productsData);
+    // const resualt = await ProductService.createProductsFronDB(productsData);
 
-    const zodParsedData=ProductDataSchema.parse(productsData)
-    const resualt=await ProductService.createProductsFronDB(zodParsedData)
-
+    const zodParsedData = ProductDataSchema.parse(productsData);
+    const resualt = await ProductService.createProductsFronDB(zodParsedData);
 
     res.status(200).json({
       success: true,

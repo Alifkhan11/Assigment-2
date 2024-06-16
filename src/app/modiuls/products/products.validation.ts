@@ -6,7 +6,10 @@ export const ProductVariantSchema = z.object({
 });
 
 export const ProductInventorySchema = z.object({
-  quantity: z.number().int().nonnegative('Quantity must be a non-negative integer'),
+  quantity: z
+    .number()
+    .int()
+    .nonnegative('Quantity must be a non-negative integer'),
   inStock: z.boolean(),
 });
 

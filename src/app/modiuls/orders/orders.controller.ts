@@ -1,4 +1,4 @@
-import { Request, Response, query } from 'express';
+import { Request, Response } from 'express';
 import { OrderService } from './orders.service';
 import OrderSchemaValidation from './orders.validation';
 
@@ -7,8 +7,8 @@ const createOrderData = async (req: Request, res: Response) => {
   try {
     const { Orders: OrderData } = req.body;
     // const resualt = await OrderService.createOrderFronDB(OrderData);
-    const zodParsedDatainOrder=OrderSchemaValidation.parse(OrderData)
-    const resualt =await OrderService.createOrderFronDB(zodParsedDatainOrder)
+    const zodParsedDatainOrder = OrderSchemaValidation.parse(OrderData);
+    const resualt = await OrderService.createOrderFronDB(zodParsedDatainOrder);
 
     res.status(200).json({
       success: true,
