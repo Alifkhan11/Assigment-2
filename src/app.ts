@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import { ProductsRought } from './app/modiuls/products/products.router';
+import { OrderRouther } from './app/modiuls/orders/orders.router';
 
 const app: Application = express();
 
@@ -9,6 +10,7 @@ app.use(cors());
 
 //application rought
 app.use('/api/products', ProductsRought);
+app.use('/api/orders', OrderRouther);
 
 app.get('/', (req, res) => {
   const a = 20;
