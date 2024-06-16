@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
 import { ProductService } from './products.service';
+import ProductDataSchema from './products.validation';
 
 //add products
 
 const createProducts = async (req: Request, res: Response) => {
   try {
     const { Products: productsData } = req.body;
-    const resualt = await ProductService.createProductsFronDB(productsData);
+// const resualt = await ProductService.createProductsFronDB(productsData);
+
+    const zodParsedData=ProductDataSchema.parse(productsData)
+    const resualt=await ProductService.createProductsFronDB(zodParsedData)
+
 
     res.status(200).json({
       success: true,
@@ -126,7 +131,9 @@ const searchProducts = async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: error.message || "Products matching search term 'iphone' fetched unsuccessfully!",
+      message:
+        error.message ||
+        "Products matching search term 'iphone' fetched unsuccessfully!",
       data: error,
     });
   }

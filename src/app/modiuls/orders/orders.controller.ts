@@ -1,6 +1,5 @@
-import { Request, Response, query } from "express";
-import { OrderService } from "./orders.service";
-
+import { Request, Response, query } from 'express';
+import { OrderService } from './orders.service';
 
 //create data
 const createOrderData = async (req: Request, res: Response) => {
@@ -22,48 +21,46 @@ const createOrderData = async (req: Request, res: Response) => {
   }
 };
 
-
 //get data
-const getOrderData=async(req:Request,res:Response)=>{
+const getOrderData = async (req: Request, res: Response) => {
   try {
-    const resualt=await OrderService.getOrderFromDB()
+    const resualt = await OrderService.getOrderFromDB();
     res.status(200).json({
-      success:true,
-      message:"Orders fetched successfully!",
-      data:resualt
-    })
-  } catch (error:any) {
-      res.status(500).json({
-      success:false,
-      message:error.message||"Orders fetched unsuccessfully!",
-      data:error
-    })
+      success: true,
+      message: 'Orders fetched successfully!',
+      data: resualt,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Orders fetched unsuccessfully!',
+      data: error,
+    });
   }
-}
+};
 
 //search order data
-const searchOrderData=async(req:Request,res:Response)=>{
+const searchOrderData = async (req: Request, res: Response) => {
   try {
-    const email=req.query.email as string
+    const email = req.query.email as string;
 
-    const resualt=await OrderService.searchOrderFromDB(email)
+    const resualt = await OrderService.searchOrderFromDB(email);
     res.status(200).json({
-      success:true,
-      message: "Orders fetched successfully for user email!",
-      data:resualt
-    })
-  } catch (error:any) {
-     res.status(500).json({
-      success:false,
-      message:error.message|| "Orders fetched unsuccessfully for user email!",
-      data:error
-    })
+      success: true,
+      message: 'Orders fetched successfully for user email!',
+      data: resualt,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Orders fetched unsuccessfully for user email!',
+      data: error,
+    });
   }
-}
+};
 
-
-export const OrderController={
-    createOrderData,
-    getOrderData,
-    searchOrderData
-}
+export const OrderController = {
+  createOrderData,
+  getOrderData,
+  searchOrderData,
+};

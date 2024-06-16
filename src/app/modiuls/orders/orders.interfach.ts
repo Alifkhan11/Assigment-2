@@ -1,6 +1,6 @@
-export type TProductsOrder={
-    email:string,
-    productId:String,
-    price:number,
-    quantity:number
-}
+export type TProductsOrder = {
+  email: string;
+  productId: string;
+  price: number;
+  quantity: number;
+};
