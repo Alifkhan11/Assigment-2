@@ -6,17 +6,24 @@ const createOrderFronDB = async (TProductsOrder: TProductsOrder) => {
   return resualt;
 };
 
-const getOrderFromDB = async () => {
-  const resualt = await Order.find();
-  return resualt;
-};
-const searchOrderFromDB = async (email: string) => {
-  const resualt = await Order.find({ $text: { $search: email } });
-  return resualt;
+const getOrderFromDB = async (query: Record<string, unknown>) => {
+  let email = '';
+
+  if (query?.email) {
+    email = query?.email as string;
+  }
+
+  const searchQuery = Order.find({
+    $or: ['email'].map((field) => ({
+      [field]: { $regex: email, $options: 'i' },
+    })),
+  });
+
+  // const resualt = await Product.find({ $text: { $search: searchTerm } });
+  return searchQuery;
 };
 
 export const OrderService = {
   createOrderFronDB,
   getOrderFromDB,
-  searchOrderFromDB,
 };

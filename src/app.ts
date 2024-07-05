@@ -14,7 +14,7 @@ app.use('/api/orders', OrderRouther);
 
 app.get('/', (req, res) => {
   const a = 20;
-  res.send('Hello World! 200300' + a);
+  res.send('Hello World!' + a);
 });
 
 export default app;

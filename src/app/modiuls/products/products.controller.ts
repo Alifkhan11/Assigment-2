@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { ProductService } from './products.service';
 import ProductDataSchema from './products.validation';
@@ -6,10 +7,9 @@ import ProductDataSchema from './products.validation';
 
 const createProducts = async (req: Request, res: Response) => {
   try {
-    const { Products: productsData } = req.body;
     // const resualt = await ProductService.createProductsFronDB(productsData);
 
-    const zodParsedData = ProductDataSchema.parse(productsData);
+    const zodParsedData = ProductDataSchema.parse(req.body);
     const resualt = await ProductService.createProductsFronDB(zodParsedData);
 
     res.status(200).json({
@@ -30,7 +30,7 @@ const createProducts = async (req: Request, res: Response) => {
 
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const resualt = await ProductService.getProductsFromDB();
+    const resualt = await ProductService.getProductsFromDB(req.query);
 
     res.status(200).json({
       success: true,
@@ -72,11 +72,10 @@ const getoneProducts = async (req: Request, res: Response) => {
 const updathProducts = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const { Products: productsData } = req.body;
 
     const resualt = await ProductService.updathProductsFromDB(
       productId,
-      productsData,
+      req.body,
     );
 
     res.status(200).json({
@@ -115,34 +114,10 @@ const deletedProducts = async (req: Request, res: Response) => {
   }
 };
 
-//search products
-
-const searchProducts = async (req: Request, res: Response) => {
-  try {
-    const query = req.query.searchTerm as string;
-    const resualt = await ProductService.searchProductsFromDB(query);
-
-    res.status(200).json({
-      success: true,
-      message: "Products matching search term 'iphone' fetched successfully!",
-      data: resualt,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message:
-        error.message ||
-        "Products matching search term 'iphone' fetched unsuccessfully!",
-      data: error,
-    });
-  }
-};
-
 export const ProductsController = {
   createProducts,
   getProducts,
   getoneProducts,
   updathProducts,
   deletedProducts,
-  searchProducts,
 };

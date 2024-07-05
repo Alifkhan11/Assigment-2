@@ -7,6 +7,4 @@ router.post('/', OrderController.createOrderData);
 
 router.get('/', OrderController.getOrderData);
 
-router.get('/', OrderController.searchOrderData);
-
 export const OrderRouther = router;

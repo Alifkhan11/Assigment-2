@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { OrderService } from './orders.service';
 import OrderSchemaValidation from './orders.validation';
@@ -5,9 +6,8 @@ import OrderSchemaValidation from './orders.validation';
 //create data
 const createOrderData = async (req: Request, res: Response) => {
   try {
-    const { Orders: OrderData } = req.body;
     // const resualt = await OrderService.createOrderFronDB(OrderData);
-    const zodParsedDatainOrder = OrderSchemaValidation.parse(OrderData);
+    const zodParsedDatainOrder = OrderSchemaValidation.parse(req.body);
     const resualt = await OrderService.createOrderFronDB(zodParsedDatainOrder);
 
     res.status(200).json({
@@ -27,7 +27,7 @@ const createOrderData = async (req: Request, res: Response) => {
 //get data
 const getOrderData = async (req: Request, res: Response) => {
   try {
-    const resualt = await OrderService.getOrderFromDB();
+    const resualt = await OrderService.getOrderFromDB(req.query);
     res.status(200).json({
       success: true,
       message: 'Orders fetched successfully!',
@@ -42,28 +42,7 @@ const getOrderData = async (req: Request, res: Response) => {
   }
 };
 
-//search order data
-const searchOrderData = async (req: Request, res: Response) => {
-  try {
-    const email = req.query.email as string;
-
-    const resualt = await OrderService.searchOrderFromDB(email);
-    res.status(200).json({
-      success: true,
-      message: 'Orders fetched successfully for user email!',
-      data: resualt,
-    });
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Orders fetched unsuccessfully for user email!',
-      data: error,
-    });
-  }
-};
-
 export const OrderController = {
   createOrderData,
   getOrderData,
-  searchOrderData,
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TProductData } from './products.interfach';
 import { Product } from './products.model';
 
@@ -6,9 +7,23 @@ const createProductsFronDB = async (TProductsData: TProductData) => {
   return resualt;
 };
 
-const getProductsFromDB = async () => {
-  const resualt = await Product.find();
-  return resualt;
+const getProductsFromDB = async (query: Record<string, unknown>) => {
+  // const queryObj={...query}
+
+  let searchTerm = '';
+
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string;
+  }
+
+  const searchQuery = Product.find({
+    $or: ['name', 'description'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
+
+  // const resualt = await Product.find({ $text: { $search: searchTerm } });
+  return searchQuery;
 };
 
 const getoneProductsFromDB = async (_id: string) => {
@@ -28,16 +43,10 @@ const deletedProductFromDB = async (_id: string) => {
   return resualt;
 };
 
-const searchProductsFromDB = async (searchTerm: string) => {
-  const resualt = await Product.find({ $text: { $search: searchTerm } });
-  return resualt;
-};
-
 export const ProductService = {
   createProductsFronDB,
   getProductsFromDB,
   getoneProductsFromDB,
   updathProductsFromDB,
   deletedProductFromDB,
-  searchProductsFromDB,
 };
